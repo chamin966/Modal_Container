@@ -31,9 +31,7 @@ function ModalRoot({ children }: IModalProps) {
     closeModal,
   };
 
-  return (
-    <ModalContext.Provider value={modalProps}>{children}</ModalContext.Provider>
-  );
+  return <ModalContext.Provider value={modalProps}>{children}</ModalContext.Provider>;
 }
 
 const OpenButton = ({ children }: IModalProps) => {
@@ -49,30 +47,13 @@ const OpenButton = ({ children }: IModalProps) => {
 const ModalOverlay = () => {
   const { isOpen, closeModal } = useContext(ModalContext) as IModalContext;
 
-  return (
-    <>
-      {isOpen && (
-        <div
-          className='fixed bg-black opacity-30 inset-0'
-          onClick={closeModal}
-        />
-      )}
-    </>
-  );
+  return <>{isOpen && <div className='fixed bg-black opacity-30 inset-0' onClick={closeModal} />}</>;
 };
 
 const ModalContents = ({ children }: IModalProps) => {
   const { isOpen } = useContext(ModalContext) as IModalContext;
 
-  return (
-    <>
-      {isOpen && (
-        <div className='flex flex-col fixed p-20  justify-center items-center bg-white'>
-          {children}
-        </div>
-      )}
-    </>
-  );
+  return <>{isOpen && <div className='fixed bg-white'>{children}</div>}</>;
 };
 
 const ModalTitle = ({ children }: IModalProps) => {

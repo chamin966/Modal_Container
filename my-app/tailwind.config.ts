@@ -10,8 +10,8 @@ const config: Config = {
     extend: {
       backgroundImage: {
         'gradient-radial': 'radial-gradient(var(--tw-gradient-stops))',
-        'gradient-conic':
-          'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'gradient-conic': 'conic-gradient(from 180deg at 50% 50%, var(--tw-gradient-stops))',
+        'bill-background': "url('../resource/image/bill.jpg')",
       },
       keyframes: {
         rolling: {
@@ -19,7 +19,7 @@ const config: Config = {
             transform: 'translateY(0)',
           },
           '100%': {
-            transform: 'translateY(calc(-100% * 15))',
+            transform: 'translateY(calc(-100% * 10))',
           },
         },
         heartbeat: {

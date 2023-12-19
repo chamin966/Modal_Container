@@ -61,45 +61,32 @@ function RouletteRoot({ children }: IRouletteProps) {
     setSelectedIndex,
   };
 
-  return (
-    <RouletteContext.Provider value={rouletteProps}>
-      {children}
-    </RouletteContext.Provider>
-  );
+  return <RouletteContext.Provider value={rouletteProps}>{children}</RouletteContext.Provider>;
 }
 
 const RouletteContents = ({ children }: IRouletteProps) => {
   return (
-    <div className='flex flex-col justify-center items-center gap-5'>
+    <div className='flex flex-col justify-center items-center gap-60 h-[700px] w-[430px] bg-bill-background'>
       {children}
     </div>
   );
 };
 
 const RouletteSlot = () => {
-  const { isStop, isSlowDown, selectedIndex } = useContext(
-    RouletteContext,
-  ) as IRouletteContext;
+  const { isStop, isSlowDown, selectedIndex } = useContext(RouletteContext) as IRouletteContext;
 
   return (
-    <div className='h-[100px] w-[200px]'>
-      <ul className='flex flex-col items-center bg-white text-4xl max-h-[40px] overflow-hidden'>
-        {isStop ? (
-          <li className='animate-heartbeat'>{FOODS[selectedIndex]}</li>
-        ) : (
-          FOODS.slice(1).map((food: string, index: number) => (
-            <li
-              className={`max-h-[40px] bg-white text-4xl ${
-                isSlowDown ? 'animate-breaking' : 'animate-rolling'
-              }`}
-              key={index}
-            >
-              {food}
-            </li>
-          ))
-        )}
-      </ul>
-    </div>
+    <ul className='flex flex-col items-center justify-center gap-5 bg-transparent text-6xl max-h-[70px] w-full px-10 overflow-hidden'>
+      {isStop ? (
+        <li className='animate-heartbeat text-center'>{FOODS[selectedIndex]}</li>
+      ) : (
+        FOODS.slice(1).map((food: string, index: number) => (
+          <li className={`max-h-[70px] text-center ${isSlowDown ? 'animate-breaking' : 'animate-rolling'}`} key={index}>
+            {food}
+          </li>
+        ))
+      )}
+    </ul>
   );
 };
 
@@ -110,16 +97,13 @@ const RouletteRollButton = ({ children }: IRouletteProps) => {
 };
 
 const RouletteStopButton = ({ children }: IRouletteProps) => {
-  const { isStop, stopRoulette, setSelectedIndex } = useContext(
-    RouletteContext,
-  ) as IRouletteContext;
+  const { isStop, stopRoulette, setSelectedIndex } = useContext(RouletteContext) as IRouletteContext;
 
   const handleStopButton = () => {
     if (!isStop) {
       stopRoulette();
       // 1 <= randNum <= FOODS.length - 1
-      const randNum: number =
-        Math.floor(Math.random() * (FOODS.length - 1)) + 1;
+      const randNum: number = Math.floor(Math.random() * (FOODS.length - 1)) + 1;
       setSelectedIndex(randNum);
     }
   };
