@@ -131,14 +131,14 @@ export const RouletteStopButton = ({ children }: IRouletteProps) => {
   return <button onClick={handleStopButton}>{children}</button>;
 };
 
-export const RouletteBottons = ({ children }: IRouletteProps) => {
+export const RouletteButtons = ({ children }: IRouletteProps) => {
   return <div className='flex gap-10'>{children}</div>;
 };
 
 export default Roulette;
 
-Roulette.RouletteContainer = RouletteContainer;
 Roulette.RouletteSlot = RouletteSlot;
-Roulette.RouletteRollBotton = RouletteRollButton;
+Roulette.RouletteContainer = RouletteContainer;
+Roulette.RouletteRollButton = RouletteRollButton;
 Roulette.RouletteStopButton = RouletteStopButton;
-Roulette.RouletteBottons = RouletteBottons;
+Roulette.RouletteButtons = RouletteButtons;
