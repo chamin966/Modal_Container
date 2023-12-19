@@ -12,7 +12,7 @@ interface IModalProps {
   children: ReactNode;
 }
 
-export function Modal(props: IModalProps) {
+export function Modal({ children }: IModalProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const openModal = () => {
@@ -32,16 +32,18 @@ export function Modal(props: IModalProps) {
   };
 
   return (
-    <ModalContext.Provider value={modalProps}>
-      {props.children}
-    </ModalContext.Provider>
+    <ModalContext.Provider value={modalProps}>{children}</ModalContext.Provider>
   );
 }
 
-export const OpenButton = () => {
+export const OpenButton = ({ children }: IModalProps) => {
   const { openModal } = useContext(ModalContext) as IModalContext;
 
-  return <button onClick={openModal}>열기</button>;
+  return (
+    <button className='text-blue-600' onClick={openModal}>
+      {children}
+    </button>
+  );
 };
 
 export const ModalOverlay = () => {
@@ -59,34 +61,32 @@ export const ModalOverlay = () => {
   );
 };
 
-export const ModalContents = (props: IModalProps) => {
-  const { isOpen, closeModal } = useContext(ModalContext) as IModalContext;
+export const ModalContents = ({ children }: IModalProps) => {
+  const { isOpen } = useContext(ModalContext) as IModalContext;
 
   return (
     <>
       {isOpen && (
-        <div className='fixed h-40 w-40 bg-red-700'>{props.children}</div>
+        <div className='flex flex-col fixed p-20  justify-center items-center bg-white'>
+          {children}
+        </div>
       )}
     </>
   );
 };
 
-export const ModalTitle = (props: IModalProps) => {
-  return <span className='text-neutral-50'>{props.children}</span>;
+export const ModalTitle = ({ children }: IModalProps) => {
+  return <span>{children}</span>;
 };
 
 export const ModalBody = () => {
-  return <div className='text-neutral-50'>모달 내용</div>;
+  return <div>모달 내용</div>;
 };
 
 export const CloseButton = () => {
   const { closeModal } = useContext(ModalContext) as IModalContext;
 
-  return (
-    <button className='text-neutral-50' onClick={closeModal}>
-      닫기
-    </button>
-  );
+  return <button onClick={closeModal}>닫기</button>;
 };
 
 Modal.OpenButton = OpenButton;

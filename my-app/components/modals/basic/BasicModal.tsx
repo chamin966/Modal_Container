@@ -1,9 +1,9 @@
-import { Modal } from '@/components/Modal';
+import { Modal } from '@/components/modals/Modal';
 
 function BasicModal() {
   return (
     <Modal>
-      <Modal.OpenButton />
+      <Modal.OpenButton>Basic Modal</Modal.OpenButton>
       <Modal.ModalOverlay />
       <Modal.ModalContents>
         <Modal.ModalTitle>모달 타이틀</Modal.ModalTitle>
