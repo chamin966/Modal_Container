@@ -35,22 +35,19 @@ const FOODS: string[] = [
 
 const RouletteContext = createContext<IRouletteContext | undefined>(undefined);
 
-export function Roulette({ children }: IRouletteProps) {
+function RouletteRoot({ children }: IRouletteProps) {
   const [isStop, setIsStop] = useState<boolean>(true);
   const [selectedIndex, setSelectedIndex] = useState<number>(0);
   const [isSlowDown, setIsSlowDown] = useState<boolean>(false);
 
   const rollRoulette = () => {
     setIsStop(false);
-    console.log('룰렛 시작');
   };
 
   const stopRoulette = () => {
-    console.log('룰렛 감속 시작');
     setIsSlowDown(true);
     setTimeout(() => {
       setIsSlowDown(false);
-      console.log('룰렛 종료');
       setIsStop(true);
     }, 2000);
   };
@@ -71,7 +68,7 @@ export function Roulette({ children }: IRouletteProps) {
   );
 }
 
-export const RouletteContainer = ({ children }: IRouletteProps) => {
+const RouletteContents = ({ children }: IRouletteProps) => {
   return (
     <div className='flex flex-col justify-center items-center gap-5'>
       {children}
@@ -79,7 +76,7 @@ export const RouletteContainer = ({ children }: IRouletteProps) => {
   );
 };
 
-export const RouletteSlot = () => {
+const RouletteSlot = () => {
   const { isStop, isSlowDown, selectedIndex } = useContext(
     RouletteContext,
   ) as IRouletteContext;
@@ -106,13 +103,13 @@ export const RouletteSlot = () => {
   );
 };
 
-export const RouletteRollButton = ({ children }: IRouletteProps) => {
+const RouletteRollButton = ({ children }: IRouletteProps) => {
   const { rollRoulette } = useContext(RouletteContext) as IRouletteContext;
 
   return <button onClick={rollRoulette}>{children}</button>;
 };
 
-export const RouletteStopButton = ({ children }: IRouletteProps) => {
+const RouletteStopButton = ({ children }: IRouletteProps) => {
   const { isStop, stopRoulette, setSelectedIndex } = useContext(
     RouletteContext,
   ) as IRouletteContext;
@@ -123,7 +120,6 @@ export const RouletteStopButton = ({ children }: IRouletteProps) => {
       // 1 <= randNum <= FOODS.length - 1
       const randNum: number =
         Math.floor(Math.random() * (FOODS.length - 1)) + 1;
-      console.log('선택된 음식: ', FOODS[randNum]);
       setSelectedIndex(randNum);
     }
   };
@@ -131,14 +127,14 @@ export const RouletteStopButton = ({ children }: IRouletteProps) => {
   return <button onClick={handleStopButton}>{children}</button>;
 };
 
-export const RouletteButtons = ({ children }: IRouletteProps) => {
+const RouletteButtons = ({ children }: IRouletteProps) => {
   return <div className='flex gap-10'>{children}</div>;
 };
 
-export default Roulette;
-
-Roulette.RouletteSlot = RouletteSlot;
-Roulette.RouletteContainer = RouletteContainer;
-Roulette.RouletteRollButton = RouletteRollButton;
-Roulette.RouletteStopButton = RouletteStopButton;
-Roulette.RouletteButtons = RouletteButtons;
+export const Roulette = Object.assign(RouletteRoot, {
+  Contents: RouletteContents,
+  Slot: RouletteSlot,
+  RollButton: RouletteRollButton,
+  StopButton: RouletteStopButton,
+  Buttons: RouletteButtons,
+});

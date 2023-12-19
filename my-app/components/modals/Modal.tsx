@@ -12,7 +12,7 @@ interface IModalProps {
   children: ReactNode;
 }
 
-export function Modal({ children }: IModalProps) {
+function ModalRoot({ children }: IModalProps) {
   const [isOpen, setIsOpen] = useState<boolean>(false);
 
   const openModal = () => {
@@ -36,7 +36,7 @@ export function Modal({ children }: IModalProps) {
   );
 }
 
-export const OpenButton = ({ children }: IModalProps) => {
+const OpenButton = ({ children }: IModalProps) => {
   const { openModal } = useContext(ModalContext) as IModalContext;
 
   return (
@@ -46,7 +46,7 @@ export const OpenButton = ({ children }: IModalProps) => {
   );
 };
 
-export const ModalOverlay = () => {
+const ModalOverlay = () => {
   const { isOpen, closeModal } = useContext(ModalContext) as IModalContext;
 
   return (
@@ -61,7 +61,7 @@ export const ModalOverlay = () => {
   );
 };
 
-export const ModalContents = ({ children }: IModalProps) => {
+const ModalContents = ({ children }: IModalProps) => {
   const { isOpen } = useContext(ModalContext) as IModalContext;
 
   return (
@@ -75,23 +75,25 @@ export const ModalContents = ({ children }: IModalProps) => {
   );
 };
 
-export const ModalTitle = ({ children }: IModalProps) => {
+const ModalTitle = ({ children }: IModalProps) => {
   return <span>{children}</span>;
 };
 
-export const ModalBody = () => {
-  return <div>모달 내용</div>;
+const ModalBody = ({ children }: IModalProps) => {
+  return <div>{children}</div>;
 };
 
-export const CloseButton = () => {
+const CloseButton = () => {
   const { closeModal } = useContext(ModalContext) as IModalContext;
 
   return <button onClick={closeModal}>닫기</button>;
 };
 
-Modal.OpenButton = OpenButton;
-Modal.CloseButton = CloseButton;
-Modal.ModalOverlay = ModalOverlay;
-Modal.ModalContents = ModalContents;
-Modal.ModalTitle = ModalTitle;
-Modal.ModalBody = ModalBody;
+export const Modal = Object.assign(ModalRoot, {
+  OpenButton: OpenButton,
+  CloseButton: CloseButton,
+  Overlay: ModalOverlay,
+  Contents: ModalContents,
+  Title: ModalTitle,
+  Body: ModalBody,
+});
